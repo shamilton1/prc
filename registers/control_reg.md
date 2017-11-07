@@ -129,3 +129,17 @@ internal precision is set such that the accumulated OQEIP is less than 1/2 the O
 internal precision can be manually set to (Input_Width + Output_Width +
 log2(Output_Width)). This reduces OQEIP to a half LSB (the phase is calculated to full
 precision regardless of the magnitude input vector).
+
+# Phase Signals
+The s_axis_phase_tdata Phase operand is PHASE_IN. The m_axis_dout_tdata phase
+output is called PHASE_OUT. The phase signals are always represented using a fixed-point
+twos complement number with an integer width of 3 bits. As with the data signals the
+integer width is fixed and any remaining bits are used for the fractional portion of the
+number. The Phase Signals require an increased integer width to accommodate the
+increased range of values they must represent when the Phase Format is set to Radians.
+
+In 2Q8, or Fix11_7, format values, +Pi and -Pi are:
+  “01100100100” => 011.00100100 => +3.14
+  “10011011100” => 100.11011100 => - 3.14
+When Phase Format is set to Scaled Radians PHASE_IN must be in the range:
+
