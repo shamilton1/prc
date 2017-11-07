@@ -108,6 +108,9 @@ the Shutdown command after it has been sent.
 
 ```
 
+![](/images/hyperbolic_sinh_cosh.PNG)
+
+
 ## Output Quantization Error
 
 The Output Quantization Error can be split into two components; the Output Quantization
