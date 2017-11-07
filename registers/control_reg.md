@@ -17,7 +17,7 @@
 | Bits | Meaning | Details |
 | ---- | ---- | ---- |
 | 31 |Trigger Pending &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Ignored on Write. On read, returns: 1 if there is a software trigger pending. 0 if there is no software trigger pending |
-| 30:*W *| Reserved | Ignored on read. 0 on write. |
+| 30:*W*| Reserved | Ignored on read. 0 on write. |
 | *W*-1:0 | Trigger | The trigger identifier. The value written to this register is a positive integer that directly specifies the row in the trigger register bank that holds the identifier of the Reconfigurable Module to be loaded by this trigger. Writing this while a trigger is pending overwrites the pending trigger. |
 |     |      |• 000 = Shutdown
 |     |      |• 010 = Restart with Status
