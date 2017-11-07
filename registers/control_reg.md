@@ -207,7 +207,7 @@ scaling factor of 2<sup>-7/2</sup> = 2<sup>-3.5</sup>.
 This shows that the CORDIC output value, **0.0010110**, maps to a decimal value of 22
 in **UFix8_0** formatting. Applying the output scaling of 2<sup>-3</sup>, or 1/8, gives **2.75**. The loss in
 accuracy is due to representing using only 8 bits. If the full accuracy result is used
-and then re-interpreted to the alternative data format (Fix<sup>8_0</sup>) and then scaled, the correct
+and then re-interpreted to the alternative data format **(Fix<sup>8_0</sup>)** and then scaled, the correct
 result is obtained.
 
 A coarse rotation is performed to rotate the input sample from the full circle into the first
@@ -216,10 +216,10 @@ the first quadrant). An inverse coarse rotation stage rotates the output sample 
 correct quadrant.
 
 The CORDIC algorithm introduces a scale factor to the amplitude of the result, and the
-CORDIC core provides the option of automatically compensating for the CORDIC scale
+CORDIC core provides the option to automatically compensate for the CORDIC scale
 factor.
 
 The CORDIC algorithm can be used to solve several functions as described above. These
-functions take different combinations of Cartesian and polar operands. The operands X_IN
-and Y_IN are input using the <sig>S_AXIS_CARTESIAN</sig> channel and the PHASE_IN operand is
-input using the S_AXIS_PHASE input.
+functions take different combinations of Cartesian and polar operands. The operands **X_IN**
+and **Y_IN** are input using the **S_AXIS_CARTESIAN** channel and the **PHASE_IN** operand is
+input using the **S_AXIS_PHASE** input.
