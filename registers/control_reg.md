@@ -4,12 +4,12 @@
 | ---- | ---- | ---- |
 | 31:16 |HALFWORD FIELD &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | A 16-bit field containing extra information for the selected command. See the command descriptions for more information. |
 | 15:8 | BYTE FIELD | An 8-bit field containing extra information for the selected command. See the command descriptions for more information. |
-| 7:0 | CMD | The following commands are defined |
+| 7:0 | CMD | The following commands are defined: |
 |     |      |• 000 = Shutdown
-|     |      |• 010 = Restart with Status
+|     |      |• 010 = Restart with Statuses
 |     |      |• 011 = Proceed
 |     |      |• 100 = User Control
-|     |      |All other values are reserved.
+|     |      |All other values are reserved
 
 
 ## SW_Trigger Register
@@ -20,10 +20,10 @@
 | 30:*W *| Reserved | Ignored on read. 0 on write. |
 | *W*-1:0 | Trigger | The trigger identifier. The value written to this register is a positive integer that directly specifies the row in the trigger register bank that holds the identifier of the Reconfigurable Module to be loaded by this trigger. Writing this while a trigger is pending overwrites the pending trigger. |
 |     |      |• 000 = Shutdown
-|     |      |• 010 = Restart with Status
+|     |      |• 010 = Restart with Statuses
 |     |      |• 011 = Proceed
 |     |      |• 100 = User Control
-|     |      |All other values are reserved.
+|     |      |All other values are reserved
 
 ## Bank 1: Trigger to Reconfigurable Module Registers
 
@@ -34,22 +34,22 @@ triggering of the same Reconfigurable Module from multiple sources.
 
 #### X-Bits
 
-Each register is 32 bits wide, but only the lower X bits are used, where X = *log <sub>2</sub> (Number of triggers allocated for this virtual socket manager)*
+Each register is 32 bits wide, but only the lower X bits are used, where X = *log <sub>2</sub>  (Number of triggers allocated for this virtual socket manager)*
 
-Unused bits are ignored on writes, and return 0 on reads. The Trigger to *<sup>Reconfigurable</sup>*
+Unused bits are ignored on writes, and return '0' on reads. The Trigger to *<sup>Reconfigurable</sup>*
 Module registers can only be accessed when the Virtual Socket Manager is in the shutdown
-state. If the Virtual Socket Manager is not in the shutdown state, reads return 0 and writes
+state. If the Virtual Socket Manager is not in the shutdown state, reads return '0' and writes
 are ignored.
 
 #### UltraScale+
 
 When managing UltraScale+ devices, all registers in this bank are
 readable and writable when the Virtual Socket Manager is in the shutdown state.
-Reconfigurable Modules for this type of device require two bitstreams, so all bitstream
+Reconfigurable Modules for this type of device require two bitstreams, therefore all bitstream
 identifiers are 0 or 1.
 
-When the device to be managed is a 7 series or UltraScale+ device, the *BS_ADDRESS* and
-BS_SIZE registers in this bank are readable and writable when the Virtual Socket Manager is in the shutdown state. Reconfigurable Modules for this type of device only require one
+When managing 7 series or UltraScale+ devices, the *BS_ADDRESS* and
+*BS_SIZE* registers in this bank are readable and writable when the Virtual Socket Manager is in the shutdown state. Reconfigurable Modules for this type of device only require one
 bitstream, so all bitstream identifiers are 0. Writes to the BS_ID registers are ignored and
 reads always return 0.
 
@@ -153,3 +153,53 @@ followed by X integer bits followed by an N bit mantissa (fraction). XQN format 
 to express numbers in the range (-2X) to (2X - 2(-N)). An equivalent notation using the
 System Generator Fix format, defined as Fix*word_length_fractional_length*, would be
 **Fix(1+X+N)_N.**
+
+A number using Q15 format is equivalent to a number using Fix16_15 representation, and a
+number in 1Q15 format is equivalent to a number using Fix17_15 representation.
+
+## Rotate, Translate, Sin, Cos and Atan Functional Configurations
+
+For functional configurations, Rotate, Translate, Sin, Cos and Atan it is possible to map
+alternative Data Signal formats to the fixed integer width fractional number used by the
+CORDIC core.
+When the input and output width differ, care must be taken to re-interpret the CORDIC
+output.
+
+### Example 8a
+
+The Vector Translation function determines the magnitude and phase angle of a given input
+vector **(X_IN, Y_IN)**. The input and output width is set to 10 bits. The standard CORDIC data
+representation is **Fix10_8**, the alternative format being mapped onto the input of the
+CORDIC is **Fix10_1**.
+
+### Example 8b
+If the output width is less than the input width, the CORDIC reduces the fractional width of
+the result. When the data output, X_OUT, is being re-interpreted to an alternative data
+format, the value must be scaled appropriately.
+
+The Vector Translation function determines the magnitude and phase angle of a given input
+vector **(X_IN, Y_IN)**. The input and output width is set to 10 bits. The standard CORDIC data
+representation is **Fix10_8**, the alternative format being mapped onto the input of the
+CORDIC is **Fix10_1**.
+
+# Square Root Functional Configuration
+
+For the Square Root functional configuration it is also possible to map other data formats
+onto the data format of the CORDIC but it might be necessary to re-interpret and scale the
+output.
+The expected output values for each input format are as follows:
+
+- UFix8_7 format: sqrt(0.0625) = **0.25**
+
+- UFix8_1 format: sqrt(4) = **2**
+
+- UFix8_0 format: sqrt(8) = **2.8284**
+
+* The CORDIC output is: **X_OUT value: “00100000”**
+
+The scaling becomes a simple divide by 2, or right shift, of the input, **X_IN**, before applying
+it to the square root function. Followed by scaling the output, **X_OUT**, by 2<sup>-M</sup>.
+
+When **N** is odd, the scaling factor is not an integer power of two. This introduces an
+additional output scaling factor of . The example using UFix8_0 demonstrates this with a
+scaling factor of 2<sup>-7/2</sup> = 2<sup>-3.5</sup>.
