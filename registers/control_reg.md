@@ -32,9 +32,65 @@ and the Reconfigurable Modules to load. There can be more triggers than Reconfig
 Modules, allowing for the in-field addition of Reconfigurable Modules and/or easier
 triggering of the same Reconfigurable Module from multiple sources.
 
-Each register is 32-bits wide, but only the lower X bits are used, where X = *log <sub>2</sub> (Number of triggers allocated for this virtual socket manager)*
+#### X-Bits
 
-Unused bits are ignored on writes, and return 0 on reads. The Trigger to <sup>Reconfigurable</sup>
+Each register is 32 bits wide, but only the lower X bits are used, where X = *log <sub>2</sub> (Number of triggers allocated for this virtual socket manager)*
+
+Unused bits are ignored on writes, and return 0 on reads. The Trigger to *<sup>Reconfigurable</sup>*
 Module registers can only be accessed when the Virtual Socket Manager is in the shutdown
 state. If the Virtual Socket Manager is not in the shutdown state, reads return 0 and writes
 are ignored.
+
+#### UltraScale+
+
+When managing UltraScale+ devices, all registers in this bank are
+readable and writable when the Virtual Socket Manager is in the shutdown state.
+Reconfigurable Modules for this type of device require two bitstreams, so all bitstream
+identifiers are 0 or 1.
+
+When the device to be managed is a 7 series or UltraScale+ device, the *BS_ADDRESS* and
+BS_SIZE registers in this bank are readable and writable when the Virtual Socket Manager is in the shutdown state. Reconfigurable Modules for this type of device only require one
+bitstream, so all bitstream identifiers are 0. Writes to the BS_ID registers are ignored and
+reads always return 0.
+
+## Restart with no Status command
+
+The **Restart with no Status** command instructs the Virtual Socket Manager to exit the
+shutdown state. The Virtual Socket Manager's Empty/Full status, Reconfigurable Module
+identifier, and error status remain as they were before the Virtual Socket Manager entered
+the shutdown state.
+
+This command should be used to restart a Virtual Socket Manager in shutdown if the
+Virtual Socket has not been modified during shutdown.
+
+This command can only be used if the Virtual Socket Manager is in the shutdown state.
+
+The BYTE and HALFWORD fields of the control word are not used with this command.
+
+## Restart with Status command
+
+The **Restart with Status** command instructs the Virtual Socket Manager to exit the
+shutdown state. The Virtual Socket Manager's Empty/Full status, and Reconfigurable
+Module identifier are specified as part of the command.
+
+*This command should be used to restart a shutdown Virtual Socket Manager if the Virtual
+Socket has been modified during shutdown (that is, a Reconfigurable Module is loaded into
+the Virtual Socket by something other than the Virtual Socket Manager).*
+
+This command must only be used with a full status if the loaded Reconfigurable Module is
+known to the Virtual Socket Manager. If a Reconfigurable Module is loaded that is unknown
+to the Virtual Socket Manager, the Virtual Socket must be left in an empty state before the
+*Virtual Socket Manager is restarted. An empty state means that either there is no
+Reconfigurable Module in the Virtual Socket, or that the loaded Reconfigurable Module
+does not need any shutdown steps.*
+
+When the Virtual Socket is on an UltraScale device,
+there is an additional requirement that the loaded Reconfigurable Module is unmasked and
+does not need its clearing bitstream loaded.
+
+## Shutdown command
+
+The **Shutdown** command instructs the Virtual Socket Manager to enter the shutdown state
+at the earliest safe opportunity. There can be a long delay (indeterminate) between the
+request and when the Virtual Socket Manager enters the shutdown state. You cannot cancel
+the Shutdown command after it has been sent.
