@@ -224,4 +224,4 @@ functions take different combinations of Cartesian and polar operands. The opera
 and **Y_IN** are input using the **S_AXIS_CARTESIAN** channel and the **PHASE_IN** operand is
 input using the **S_AXIS_PHASE** input.
 
-[](images/frac_table.PNG)
+![](/images/frac_table.PNG)
