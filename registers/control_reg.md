@@ -130,7 +130,7 @@ internal precision can be manually set to (Input_Width + Output_Width +
 log2(Output_Width)). This reduces OQEIP to a half LSB (the phase is calculated to full
 precision regardless of the magnitude input vector).
 
-# Phase Signals
+## Phase Signals
 The s_axis_phase_tdata Phase operand is PHASE_IN. The m_axis_dout_tdata phase
 output is called PHASE_OUT. The phase signals are always represented using a fixed-point
 twos complement number with an integer width of 3 bits. As with the data signals the
@@ -146,3 +146,10 @@ In 2Q8, or Fix11_7, format values, +Pi and -Pi are:
   
 When Phase Format is set to Scaled Radians PHASE_IN must be in the range:
 
+## Q Numbers Format
+
+An XQN format number is an 1+X+N bit twos complement binary number; a sign bit
+followed by X integer bits followed by an N bit mantissa (fraction). XQN format can be used
+to express numbers in the range (-2X) to (2X - 2(-N)). An equivalent notation using the
+System Generator Fix format, defined as Fix*word_length_fractional_length*, would be
+**Fix(1+X+N)_N.**
