@@ -11,7 +11,6 @@
 |     |      |• 100 = User Control
 |     |      |All other values are reserved
 
-
 ## SW_Trigger Register
 
 | Bits | Meaning | Details |
@@ -230,7 +229,78 @@ input using the **S_AXIS_PHASE** input.
 
 **2QN Format Phase: Example of a 2Q6 (or Fix9_6) Format Number**
 
+![](/images/frac_table2.PNG)
 
+# Linking
+
+To use the C model the user executable must be linked against the correct libraries for the
+target platform.
+
+## Linux
+
+The executable must be linked against the following shared object libraries:
+
+- libgmp.so.11
+
+- libIp_cordic_v6_0_bitacc_cmodel.so
+
+Using GCC, linking is typically achieved by adding the following command line options:
+
+    -L. -Wl,-rpath,. -lIp_cordic_v6_0_bitacc_cmodel
+
+This assumes the shared object libraries are in the current directory. If this is not the case,
+the -L. option should be changed to specify the library search path to use.
+
+Using GCC, the provided example program run_bitacc_cmodel.c can be compiled and
+linked using the following command:
+
+    gcc -x c++ -I. -L. -lIp_cordic_v6_0_bitacc_cmodel -Wl,-rpath,. -o run_bitacc_cmodel run_bitacc_cmodel.c
+
+## Windows
+
+The executable must be linked against the following dynamic link libraries:
+
+- libgmp.dll
+
+- libIp_cordic_v6_0_bitacc_cmodel.dll
+
+Depending on the compiler used, the following import libraries may also be required:
+
+- libgmp.lib
+
+- libIp_cordic_v6_0_bitacc_cmodel.lib
+
+Using **Microsoft Visual Studio**, linking is typically achieved by adding the import libraries to
+the Additional Dependencies entry under the Linker section of Project Properties.
+
+# Dependent Libraries
+
+The C model uses the MPIR library. This is governed by the GNU Lesser General Public
+License. You can obtain source code for the MPIR library from www.xilinx.com/
+guest_resources/gnu/. A pre-compiled MPIR library is provided with the C model, using the
+following versions:
+
+* MPIR 2.6.0
+* MPIR 2.7.5
+
+As MPIR is a compatible alternative to GMP. The GMP library can be used in place of MPIR.
+It is possible to use GMP or MPIR libraries from other sources, for example, compiled from
+source code.
+
+GMP and MPIR in particular contain many low level optimizations for specific processors.
+The libraries provided are compiled for a generic processor on each platform, using no
+optimized processor-specific code. These libraries work on any processor, but run more
+slowly than libraries compiled to use optimized processor-specific code. For the fastest
+performance, compile libraries from source on the machine on which you run the
+executables.
+
+Source code and compilation scripts are provided for the version of MPIR that was used to
+compile the provided libraries. Source code and compilation scripts for any version of the
+libraries can be obtained from the GMP and MPIR websites.
+
+**Note**: If compiling MPIR using its configure script (for example, on Linux platforms), use the
+`--enable-gmpcompat` option when running the configure script. This generates a **libgmp.so**
+library and a **gmp.h** header file that provide full compatibility with the GMP library.
 
 
 
