@@ -296,7 +296,7 @@ executables.
 
 Source code and compilation scripts are provided for the version of MPIR that was used to
 compile the provided libraries. Source code and compilation scripts for any version of the
-libraries can be obtained from the GMP and MPIR websites.
+libraries can be obtained from the GMP and MPIR []websites.
 
 **Note**: If compiling MPIR using its configure script (for example, on Linux platforms), use the
 `--enable-gmpcompat` option when running the configure script. This generates a **libgmp.so**
