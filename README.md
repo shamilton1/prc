@@ -1,0 +1,2 @@
+# prc
+register test
