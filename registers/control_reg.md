@@ -94,3 +94,35 @@ The **Shutdown** command instructs the Virtual Socket Manager to enter the shutd
 at the earliest safe opportunity. There can be a long delay (indeterminate) between the
 request and when the Virtual Socket Manager enters the shutdown state. You cannot cancel
 the Shutdown command after it has been sent.
+
+```
+• vsm_<name>_rm_shutdown_req
+
+• vsm_<name>_rm_decouple
+
+• vsm_<name>_rm_reset
+
+• vsm_<name>_sw_shutdown_req
+
+• vsm_<name>_sw_startup_req
+
+```
+
+## Output Quantization Error
+
+The Output Quantization Error can be split into two components; the Output Quantization
+Error due to the Input Quantization (OQEIQ), and the Output Quantization Error due to
+Internal Precision (OQEIP).
+
+OQEIQ is due to the half LSB of quantization noise on the X_IN,Y_IN and PHASE_IN inputs.
+In a vector rotation this input quantization noise results in OQEIQ of a half LSB on both the
+X_OUT and Y_OUT outputs. In a vector translation this input quantization noise results in
+OQEIQ of a half LSB on the X_OUT output; however, OQEIQ on the phase output is
+dependent on the ratio (Y_IN/ X_IN). Thus for small X_IN inputs the effect of input
+quantization noise on OQEIQ is greatly magnified.
+
+Due to the limited precision of internal calculations, in the CORDIC core the default
+internal precision is set such that the accumulated OQEIP is less than 1/2 the OQEIQ. The
+internal precision can be manually set to (Input_Width + Output_Width +
+log2(Output_Width)). This reduces OQEIP to a half LSB (the phase is calculated to full
+precision regardless of the magnitude input vector).
