@@ -114,52 +114,52 @@ the Shutdown command after it has been sent.
 ## Output Quantization Error
 
 The Output Quantization Error can be split into two components; the Output Quantization
-Error due to the Input Quantization (OQEIQ), and the Output Quantization Error due to
-Internal Precision (OQEIP).
+Error due to the Input Quantization (**OQEIQ**), and the Output Quantization Error due to
+Internal Precision (**OQEIP**).
 
-OQEIQ is due to the half LSB of quantization noise on the X_IN,Y_IN and PHASE_IN inputs.
+**OQEIQ** is due to the half LSB of quantization noise on the **X_IN,Y_IN** and **PHASE_IN** inputs.
 In a vector rotation this input quantization noise results in OQEIQ of a half LSB on both the
-X_OUT and Y_OUT outputs. In a vector translation this input quantization noise results in
-OQEIQ of a half LSB on the X_OUT output; however, OQEIQ on the phase output is
-dependent on the ratio (Y_IN/ X_IN). Thus for small X_IN inputs the effect of input
-quantization noise on OQEIQ is greatly magnified.
+**X_OUT** and **Y_OUT** outputs. In a vector translation this input quantization noise results in
+OQEIQ of a half LSB on the **X_OUT** output; however, **OQEIQ** on the phase output is
+dependent on the ratio **(Y_IN/ X_IN)**. Thus for small **X_IN** inputs the effect of input
+quantization noise on **OQEIQ** is greatly magnified.
 
 Due to the limited precision of internal calculations, in the CORDIC core the default
 internal precision is set such that the accumulated OQEIP is less than 1/2 the OQEIQ. The
-internal precision can be manually set to (Input_Width + Output_Width +
-log2(Output_Width)). This reduces OQEIP to a half LSB (the phase is calculated to full
+internal precision can be manually set to **(Input_Width + Output_Width +
+log2(Output_Width)**). This reduces OQEIP to a half LSB (the phase is calculated to full
 precision regardless of the magnitude input vector).
 
 ## Phase Signals
-The s_axis_phase_tdata Phase operand is PHASE_IN. The m_axis_dout_tdata phase
-output is called PHASE_OUT. The phase signals are always represented using a fixed-point
+The **s_axis_phase_tdata** Phase operand is **PHASE_IN**. The **m_axis_dout_tdata** phase
+output is called **PHASE_OUT**. The phase signals are always represented using a fixed-point
 twos complement number with an integer width of 3 bits. As with the data signals the
 integer width is fixed and any remaining bits are used for the fractional portion of the
 number. The Phase Signals require an increased integer width to accommodate the
 increased range of values they must represent when the Phase Format is set to Radians.
 
-In 2Q8, or Fix11_7, format values, +Pi and -Pi are:
+In 2Q8, or **Fix11_7**, format values, **+Pi** and **-Pi** are:
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;“01100100100” => 011.00100100 => +3.14
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**“01100100100” => 011.00100100 => +3.14**
   
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;“10011011100” => 100.11011100 => - 3.14
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**“10011011100” => 100.11011100 => - 3.14**
   
 When Phase Format is set to Scaled Radians PHASE_IN must be in the range:
 
 ## Q Numbers Format
 
-An XQN format number is an 1+X+N bit twos complement binary number; a sign bit
+An XQN format number is an **1+X+N** bit twos complement binary number; a sign bit
 followed by X integer bits followed by an N bit mantissa (fraction). XQN format can be used
-to express numbers in the range (-2X) to (2X - 2(-N)). An equivalent notation using the
+to express numbers in the range **(-2X)** to **(2X - 2(-N))**. An equivalent notation using the
 System Generator Fix format, defined as Fix*word_length_fractional_length*, would be
 **Fix(1+X+N)_N.**
 
-A number using Q15 format is equivalent to a number using Fix16_15 representation, and a
-number in 1Q15 format is equivalent to a number using Fix17_15 representation.
+A number using Q15 format is equivalent to a number using **Fix16_15** representation, and a
+number in 1Q15 format is equivalent to a number using **Fix17_15** representation.
 
 ## Rotate, Translate, Sin, Cos and Atan Functional Configurations
 
-For functional configurations, Rotate, Translate, Sin, Cos and Atan it is possible to map
+For functional configurations **Rotate**, **Translate**, **Sin**, **Cos**, and **Atan**, it is possible to map
 alternative Data Signal formats to the fixed integer width fractional number used by the
 CORDIC core.
 When the input and output width differ, care must be taken to re-interpret the CORDIC
@@ -174,7 +174,7 @@ CORDIC is **Fix10_1**.
 
 ### Example 8b
 If the output width is less than the input width, the CORDIC reduces the fractional width of
-the result. When the data output, X_OUT, is being re-interpreted to an alternative data
+the result. When the data output, **X_OUT**, is being re-interpreted to an alternative data
 format, the value must be scaled appropriately.
 
 The Vector Translation function determines the magnitude and phase angle of a given input
@@ -198,7 +198,7 @@ The expected output values for each input format are as follows:
 * The CORDIC output is: **X_OUT value: “00100000”**
 
 The scaling becomes a simple divide by 2, or right shift, of the input, **X_IN**, before applying
-it to the square root function. Followed by scaling the output, **X_OUT**, by 2<sup>-M</sup>.
+it to the square root function. Followed by scaling the output, **X_OUT**, by **2<sup>-M</sup>**.
 
 When **N** is odd, the scaling factor is not an integer power of two. This introduces an
 additional output scaling factor of . The example using UFix8_0 demonstrates this with a
@@ -224,4 +224,14 @@ functions take different combinations of Cartesian and polar operands. The opera
 and **Y_IN** are input using the **S_AXIS_CARTESIAN** channel and the **PHASE_IN** operand is
 input using the **S_AXIS_PHASE** input.
 
+**1QN Format Data: Example of a 1Q7 (or Fix9_7) Format Number**
+
 ![](/images/frac_table.PNG)
+
+**2QN Format Phase: Example of a 2Q6 (or Fix9_6) Format Number**
+
+
+
+
+
+
