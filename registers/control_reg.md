@@ -141,6 +141,7 @@ increased range of values they must represent when the Phase Format is set to Ra
 In 2Q8, or Fix11_7, format values, +Pi and -Pi are:
 
   “01100100100” => 011.00100100 => +3.14
+  
   “10011011100” => 100.11011100 => - 3.14
   
 When Phase Format is set to Scaled Radians PHASE_IN must be in the range:
