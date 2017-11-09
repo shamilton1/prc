@@ -24,7 +24,7 @@ An image volume stored in the XDNN Image Memory will use more bytes than the nat
 
 The dimensional translation of an image volume to how it is stored in the XDNN IMEM is summarized as follows:
 
-![](images/eq1.PNG)
+![](/images/eq1.PNG)
 
 ## Non-Blocking Mode
 
