@@ -114,11 +114,31 @@ This section describes the Scaling, Shifting and Bias stages following the DSP a
 
 After a 16-bit convolutional operation in the XDNN engine, scaling, shifting and bias operations are performed. These operations keep the 48-bit accumulated value within an appropriate (user defined) range to prevent overflow/underflow in the following layers of the network.
 
-Scaling, Shifting and Bias values provided can be applied as a different value per-output channel, or the same value across all output channels (termed "Global" in the XDNN CSR description). This option is designated in the **Command Options** field. If the "per-output channel" option is selected, these values must be loaded into the FPGA DDR in advance of kernel execution, and a DDR offset from the filter base address must be provided through the XDNN CSR interface.
+Scaling, Shifting and Bias values provided can be applied as a different values per-output channel, or the same value across all output channels (termed "Global" in the XDNN CSR description). This value is assigned in the **Command Options** field. If the **Per-Output channel** option is selected, these values must be loaded into the FPGA DDR in advance of kernel execution, and a DDR offset from the filter base address must be provided through the XDNN CSR interface.
 
 The stages following the DSP array output for a single element are shown below:
 
 ![](/images/scaling.PNG)
+
+### Pre-Scale Right-Shift
+
+This stage takes the 48-bit accumulated output from the DSP as input, and right-shifts the input by the amount defined in the 6-bit CSR field **Pre-Scale DSP Right-Shifting**. The resulting lower 16 bits are preserved and output to the next stage as described below.
+
+**Note:** If the right-shifted value is not equal to the 16-bit signed value, the 16-bit output is capped to either the min. or max. of the 16-bit signed value.
+
+### Scaling
+
+This stage takes the 16-bit output from the Pre-Scale right-shift stage (higlighted) as its input. It multiplies the input by the amount assigned in the **8-bit CSR field DSP Scale Multipliucation value**. The resulting 24-bit value is putput to the next stage (**Post-Scale Right-Shift**).
+
+### Post-Scale Right-Shift
+
+
+
+
+
+
+
+
 
 
 
