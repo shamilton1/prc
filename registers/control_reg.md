@@ -37,6 +37,28 @@ Module registers can only be accessed when the Virtual Socket Manager is in the 
 state. If the Virtual Socket Manager is not in the shutdown state, reads return '0' and writes
 are ignored.
 
+The trigger to reconfigurable module register determines the output structure of the mappings.There can be multiple triggers associated with a single reconfigurable module, allowing for the addition os multiple sources.
+The restart with Status command instructs the VSM to exit the shutsown state. An optional coarse rotation module is provided to extend the range of the input subfields to the full circle. For this configuration, the coarse rotation module is selected by default, but can be manually deselected. When this option is **not** set, the inputs must be constrained to lie in the first quadrant as described above.
+
+Within the first quadrant, the output quantization error is split into two components:
+- Input Quantaization error (**OQEIQ**) due to internal precision
+- Output Quantization error (**OQEIP**) due to internal precision
+
+**OQEIQ** is due to the half of LSB of quantization noise results on the **X_IN, Y, IN** and **PHASE_IN**.
+In a vector **rotation**, this input quantization noise results in OQEIQ of a half LSB on both outputs. 
+In a vector **translation**, this input quantization noise results in OQEIQ of a half LSB on the **X_OUT** output only.
+
+
+
+
+
+
+
+
+
+
+
+
 #### UltraScale+
 
 When managing UltraScale+ devices, all registers in this bank are
@@ -164,14 +186,12 @@ constrained to lie in the first quadrant (-P<sub><i>i</i></sub>/4 to + P<sub><i>
 
 ## Rectangular to Polar Translation
 
+Using successively smaller rotations ensures each micro-rotation is accessible for P<sub><i>i</i>-1</sub>
+
 When the vector translational functional configuration is selected, the input vector
 (X_IN,Y_IN) is rotated using the CORDIC algorithm until the Y component is zero. This
 generates the scaled output magnitude, Z<sup><i>i</sup></i> * Mag(X_IN,Y_IN), and the output phase,
-Atan(Y_IN/X_IN) as shown below.
-
-
-
-
+Atan(Y_IN/X_IN) as shown below. Limiting the precision of internal calculations in the core results in the accumulated OQEIP being less than half that of the OQEIQ. However the phase output is dependent on the relationship between X_IN and Y_IN being constant.
 
 
 ## Output Quantization Error
@@ -179,6 +199,15 @@ Atan(Y_IN/X_IN) as shown below.
 The Output Quantization Error can be split into two components; the Output Quantization
 Error due to the Input Quantization (**OQEIQ**), and the Output Quantization Error due to
 Internal Precision (**OQEIP**).
+
+Optional coarse rotation can be used to extend the range of input subfields to full circle mode. Althought the coarse rotation module is selected by default, it can be manually deselected if the buffer size exceeds that set by the overflow/underflow bit see relevant register).
+
+## Polar Translation
+The CORDIC algorithm uses the compensation scaling module to derive the results of precision calculations performed in full circle mode regardless of the bit set to monitor null signals.
+The advanced parameters section provides more detail on input constraints and user configurable parameters available at build time
+
+
+
 
 **OQEIQ** is due to the half LSB of quantization noise on the **X_IN,Y_IN** and **PHASE_IN** inputs.
 In a vector rotation this input quantization noise results in OQEIQ of a half LSB on both the
