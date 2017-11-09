@@ -111,6 +111,66 @@ the Shutdown command after it has been sent.
 The CORDIC algorithm was initially designed to perform a vector rotation, where the vector
 (**X,Y**) is rotated through the angle yielding a new vector (**X’,Y’**).
 
+![](/images/eq1.PNG)
+
+The CORDIC algorithm performs a vector rotation whereby a sequence of successively smaller rotations, each of angle *atan(2<sup>-</sup>), known as micro-rotations.
+
+The following shows the expression for the i<sup>th</sup> iteration where *i* is the iteration index from 0 to *n*.
+
+![](/images/eq5.PNG)
+
+Each micro-rotation stage can be expressed as a simple shift and add/subtract operation. The following equation shows the vectror expression rotation expression for the n<sup>th</sup> interation. Vector rotation is expressed as a series of n micro-rotations.
+
+
+![](/images/eq4.PNG)
+
+Vector rotation rotates the vector (X, Y) through the angle to yield a new vector (X’,Y’), as
+shown below.
+
+Vector rotation is performed such that theta converges towards zero when:
+
+- 0<sub><i>i</i>-1</sub>=0, is set to 0
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and 
+
+- 1<sub><i>i</i>-1</sub>=0 is set to 1
+
+When the vector rotation functional configuration is selected, the input vector (X_IN, Y_IN)
+is rotated by the input angle, , using the CORDIC algorithm. This generates the scaled
+output vector, Z<sub><i>i</i></sub> * (X’, Y’), shown below:
+
+![](/images/eq5.PNG)
+
+## Polar to Rectangular Translation
+
+The CORDIC algorithm performs a vector rotation whereby a sequence of successively smaller rotations, each of angle atan(2<sup>-i</sup>), known as micro-rotations.
+
+The input subfields, **X_IN**, **Y_IN** and **PHASE_IN**, are limited to the ranges given in the following table
+when coarse rotation is set. Inputs outside these ranges produce unpredictable results. See
+Input/Output Data Representation for more information about the CORDIC binary data
+formats.
+
+An optional coarse rotation module is provided to extend the range of the input subfields,
+X_IN, Y_IN and PHASE_IN, to the full circle. For this functional configuration, the coarse
+rotation module is selected by default, but can be manually deselected. See Advanced
+Configuration Parameters for more information. When this option is not set, inputs must be
+constrained to lie in the first quadrant (P<sub><i>i</i></sub>/4 to + P<sub><i>i</i></sub>/4).
+
+An optional compensation scaling module is provided which compensates for the CORDIC scale
+factor Z<sub><i>i</sub></i>. For this functional configuration, the compensation scaling module is selected by
+default, but can be manually deselected. See **Advanced Configuration Parameters** for more
+information. When this option is not set, inputs must be
+constrained to lie in the first quadrant (-P<sub><i>i</i></sub>/4 to + P<sub><i>i</i></sub>/4).
+
+## Rectangular to Polar Translation
+
+When the vector translational functional configuration is selected, the input vector
+(X_IN,Y_IN) is rotated using the CORDIC algorithm until the Y component is zero. This
+generates the scaled output magnitude, Z<sup><i>i</sup></i> * Mag(X_IN,Y_IN), and the output phase,
+Atan(Y_IN/X_IN) as shown below.
+
+
+
 
 
 
