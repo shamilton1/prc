@@ -26,7 +26,52 @@ The dimensional translation of an image volume to how it is stored in the XDNN I
 
 ![]:(images/dbb.PNG)
 
+## Non-Blocking Mode
 
+The CORDIC core provides a mode intended to ease the migration from previous, non-AXI
+versions of this core. The term “NonBlocking” is used to indicate that lack of data on one
+input channel does not cause incoming data on the other channel to be buffered. Also, back
+pressure from the output is not possible because in NonBlocking mode the output channel
+does not have a tready signal. The full flow control of AXI4-Stream is not always required.
+Blocking or NonBlocking behavior is selected using the flow_control parameter or GUI field.
+The choice of Blocking or NonBlocking applies to the whole core, not each channel
+individually. Channels still have the non-optional tvalid signal, which is analogous to the
+New Data (ND) signal on many cores prior to the adoption of AXI4-Stream. Without the
+facility to block dataflow, the internal implementation is much simplified, so fewer
+resources are required for this mode. This mode is recommended for users migrating their
+design to this version from a pre-AXI version with minimal change.
+When all of the present input channels receive an active tvalid (and tready, if present, is
+asserted), an operation is validated and the output tvalid (suitably delayed by the latency
+of the core) is asserted to qualify the result. This is to allow a minimal migration from
+previous versions. If one channel receives tvalid and the other does not, an operation
+does not occur, even if tready is present and asserted. Unlike Blocking mode (which is fully
+AXI4-Stream compliant) valid transactions on an individual channel can be ignored in
+NonBlocking mode. For performance, ARESETn is registered internally, which delays its
+action by one clock cycle. The effect is that the core is still reset and does not accept input
+in the cycle following the deassertion of ARESETn. tvalid is also inactive on the output
+channel for this cycle.
+
+## Blocking Mode
+
+The term ‘Blocking’ means that each channel with tready buffers data for use. The full flow
+control of AXI4-Stream aids system design because the flow of data is self-regulating.
+Blocking or NonBlocking behavior is selected using the flow_control parameter or GUI field.
+Data loss is prevented by the presence of back pressure (tready), so that data is only
+propagated when the downstream datapath is ready to process the data. The CORDIC core
+has one or two input channels and one output channel. When all input channels have
+validated data available, an operation occurs and the result becomes available on the
+output. If the output is prevented from off-loading data because m_axis_dout_tready
+is low, data accumulates in the output buffer internal to the core. When this output buffer
+is nearly full the core stops further operations. This prevents the input buffers from
+off-loading data for new operations so the input buffers fill as new data is input. When the
+input buffers fill, their respective treadys (s_axis_cartesian_tready and
+s_axis_phase_tready) are deasserted to prevent further input. This is the normal action
+of back pressure. The two input channels are tied, as each must receive validated data
+before an operation can proceed. As an additional blocking mechanism, one input channel
+does not receive validated data while the other does. In this case, the validated data is
+stored in the input buffer of the channel. After a few cycles of this scenario, the buffer of the
+channel receiving data fills and tready for that channel is deasserted until the empty
+channel receives some data.
 
 
 
