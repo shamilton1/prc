@@ -98,10 +98,10 @@ For the XDNN engine, the following sequence of transformations on this conventio
 
 The following table shows the difference between the natural size of an image volume compared to when it is stored in the XDNN Image Memory (IMEM size)
 
-Image Volume size -v- DNN IMEM
+#### Image Volume size -v- DNN IMEM
 
 | Width | Height | Depth | Pixel Bytes | Natural Size | IMEM Size |
-|-----|-----|-----|-----|-----|-----
+|-----|-----|-----|-----|-----|-----|
 |97|98|99|224|107|106|
 |98|99|102|226|108|107|
 |95|97|94|225|107|106|
