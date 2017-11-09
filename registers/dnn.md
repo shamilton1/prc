@@ -116,6 +116,13 @@ After a 16-bit convolutional operation in the XDNN engine, scaling, shifting and
 
 Scaling, Shifting and Bias values provided can be applied as a different value per-output channel, or the same value across all output channels (termed "Global" in the XDNN CSR description). This option is designated in the **Command Options** field. If the "per-output channel" option is selected, these values must be loaded into the FPGA DDR in advance of kernel execution, and a DDR offset from the filter base address must be provided through the XDNN CSR interface.
 
+The stages following the DSP array output for a single element are shown below:
+
+![](/images/scaling.PNG)
+
+
+
+
 
 
 
