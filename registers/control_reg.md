@@ -106,6 +106,13 @@ the Shutdown command after it has been sent.
 
 ![](/images/hyperbolic_sinh_cosh.PNG)
 
+# Description
+
+The CORDIC algorithm was initially designed to perform a vector rotation, where the vector
+(**X,Y**) is rotated through the angle yielding a new vector (**X’,Y’**).
+
+
+
 
 ## Output Quantization Error
 
@@ -192,6 +199,8 @@ The expected output values for each input format are as follows:
 - UFix8_0 format: sqrt(8) = **2.8284**
 
 * The CORDIC output is: **X_OUT value: “00100000”**
+
+![](/images/tdata.PNG)
 
 The scaling becomes a simple divide by 2, or right shift, of the input, **X_IN**, before applying
 it to the square root function. Followed by scaling the output, **X_OUT**, by **2<sup>-M</sup>**.
