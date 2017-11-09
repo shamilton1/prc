@@ -22,7 +22,10 @@ An image volume stored in the XDNN Image Memory will use more bytes than the nat
   - The image width (in bytes) will, at minimum, be equal to the IMEM width due to XDNN's data packing performance optimization.
   - The image depth must be even so an odd depth must be rounded up to the next even number.
 
-The thing
+The dimensional translation of an image volume to how it is stored in the XDNN IMEM is summarized as follows:
+
+![]:(images/dbb.PNG)
+
 
 
 
