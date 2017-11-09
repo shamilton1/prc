@@ -26,7 +26,7 @@ The dimensional translation of an image volume to how it is stored in the XDNN I
 
 ![](/images/eq1.PNG)
 
-## Non-Blocking Mode
+## NonBlocking Mode
 
 The CORDIC core provides a mode intended to ease the migration from previous, non-AXI
 versions of this core. The term “NonBlocking” is used to indicate that lack of data on one
@@ -107,6 +107,18 @@ The following table shows the difference between the natural size of an image vo
 |95|97|94|225|107|106|
 |97|98|99|224|107|106|
 |99|99|102|224|128|107|
+
+# Scaling, Shifting, and Bias
+
+This section describes the Scaling, Shifting and Bias stages following the DSP array output for a single element.
+
+After a 16-bit convolutional operation in the XDNN engine, scaling, shifting and bias operations are performed. These operations keep the 48-bit accumulated value within an appropriate (user defined) range to prevent overflow/underflow in the following layers of the network.
+
+Scaling, Shifting and Bias values provided can be applied as a different value per-output channel, or the same value across all output channels (termed "Global" in the XDNN CSR description). This option is designated in the **Command Options** field. If the "per-output channel" option is selected, these values must be loaded into the FPGA DDR in advance of kernel execution, and a DDR offset from the filter base address must be provided through the XDNN CSR interface.
+
+
+
+
 
 
 
