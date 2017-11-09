@@ -73,6 +73,40 @@ stored in the input buffer of the channel. After a few cycles of this scenario, 
 channel receiving data fills and tready for that channel is deasserted until the empty
 channel receives some data.
 
+## Filter Vectors
+
+Filter vectors are loaded from DDR to XDNN internal memory on the fly while the XDNN engine is performing the Conv2D function.The XDNN engine requires the filter vectors for all convolutional network layers to be preloaded into the FPGA DDR in a specific format before starting execution. This format is described in this section.
+This explanantion uses shorthand symbols as described in the following table:
+
+| Symbol | Description |
+|:------|:-----------------------|
+|D<sub>1</sub> | Output volume depth: <ul><li> - unpadded</li><li> - padding dependent</li><li>N/A</li>|
+|D<sub>I</sub> | Input volume depth |
+|D<sub>o</sub> | Input volume depth padded to even number |
+|D<sub>s</sub> | Output volume depth padded to next multiple of 32 |
+|D<sub>H</sub> | Kernel window height |
+|D<sub>F</sub> | Conventional 3D Filter matrix for a single layer |
+|D<sub>L</sub> | Conventional 3D Filter matrix for a single layer, padded as described below |
+
+When stored in memory, this matrix is typically storeed in row-major format, with the right-most dimension changing fastest.
+
+For the XDNN engine, the following sequence of transformations on this conventional filter matrix must occur before being loaded into the FPGA DDR:
+  - Extend or shrink all filter values to 16b width
+  - Transform padded 3D Filter Matrix into a 1D array
+  - Switch to an even number of channels
+  - Transform to the next multiple of 32
+
+The following table shows the difference between the natural size of an image volume compared to when it is stored in the XDNN Image Memory (IMEM size)
+
+Image Volume size -v- DNN IMEM
+
+| Width | Height | Depth | Pixel Bytes | Natural Size | IMEM Size |
+|-----|-----|-----|-----|-----|-----
+|97|98|99|224|107|106|
+|98|99|102|226|108|107|
+|95|97|94|225|107|106|
+|97|98|99|224|107|106|
+|99|99|102|224|128|107|
 
 
 
