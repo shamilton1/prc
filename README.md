@@ -3,7 +3,7 @@ The xyz core is configured using an AXI4-Lite interface. Rx and Tx core share a 
 
 The register map is shown below: 
 
-| Address Offset Rx | Description | R/W | |Address Offset Tx | Description| R/W|
+| Address Offset Rx | Description | R/W |Address Offset Tx | Description| R/W|
 |-----|-----|-----|-----|-----|-----|
 | 0x0000 | Version | R |
 | 0x0004 | Reset | R/W |
