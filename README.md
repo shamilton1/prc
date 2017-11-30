@@ -1,8 +1,9 @@
 # prc
-register test
+The xyz core is configured using an AXI4-Lite interface. Rx and Tx core share a common address map and register definitions where possible. Exceptions are highlighted.
 
+The register map is shown below: 
 
-| Table H | H2 | H3 |
+| Address Offset | Description | R/W |
 |-----|-----|-----|
-| Cell1 | Cell 2 | Cell 3 |
+| 0x0000 | Version | R |
 
