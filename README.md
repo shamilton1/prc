@@ -16,3 +16,12 @@ The register map is shown below:
 | 0x830 | Lane 6 Link error count| R | 0x830 | Lane 6 Link error count| R |
 | 0x831 | Lane 7 Link error count| R | 0x831 | Lane 7 Link error count| R |
 | 0x832 | Lane 8 Link error count| R | 0x832 | Lane 8 Link error count| R |
+| 0x924 | Lane 0 Link error count| R | 0x924 | Lane 0 Link error count| R |
+| 0x925 | Lane 1 Link error count| R | 0x925 | Lane 1 Link error count| R |
+| 0x926 | Lane 2 Link error count| R | 0x926 | Lane 2 Link error count| R |
+| 0x927 | Lane 3 Link error count| R | 0x927 | Lane 3 Link error count| R |
+| 0x928 | Lane 4 Link error count| R | 0x928 | Lane 4 Link error count| R |
+| 0x929 | Lane 5 Link error count| R | 0x929 | Lane 5 Link error count| R |
+| 0x930 | Lane 6 Link error count| R | 0x930 | Lane 6 Link error count| R |
+| 0x931 | Lane 7 Link error count| R | 0x931 | Lane 7 Link error count| R |
+| 0x932 | Lane 8 Link error count| R | 0x932 | Lane 8 Link error count| R |
