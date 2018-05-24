@@ -132,7 +132,7 @@ This stage takes the 48-bit accumulated output from the DSP as input, and right-
 
 ### Scaling
 
-This stage takes the 16-bit output from the Pre-Scale right-shift stage (higlighted) as its input. It multiplies the input by the amount assigned in the **8-bit CSR field DSP Scale Multiplication value**. The resulting 24-bit value is output to the next stage (**Post-Scale Right-Shift**).
+This stage takes the 16-bit output from the Pre-Scale right-shift stage (highlighted) as its input. It multiplies the input by the amount assigned in the **8-bit CSR field DSP Scale Multiplication value**. The resulting 24-bit value is output to the next stage (**Post-Scale Right-Shift**).
 
 ### Post-Scale Right-Shift
 
