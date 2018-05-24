@@ -28,8 +28,8 @@ The dimensional translation of an image volume to how it is stored in the XDNN I
 
 ## NonBlocking Mode
 
-The CORDIC core supports a *NonBlocking* mode. This is intendeded to facilitate the migration from previous, non-AXI
-versions of this core. The term “NonBlocking” is used to indicate that a lack of data on one
+The CORDIC core supports a *Non-Blocking* mode. This is intended to facilitate the migration from previous, non-AXI
+versions of this core. The term “Non-Blocking” is used to indicate that a lack of data on one
 input channel does not cause incoming data on the other channel to buffer. Also, back
 pressure from the output is not possible because in NonBlocking mode, the output channel
 has no **tready** signal. The full flow control of AXI4-Stream is not always required.
