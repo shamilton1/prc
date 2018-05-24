@@ -16,6 +16,9 @@ The XDNN Image Memory's data width will match the DSP array width in bytes round
 
 The DSP Systolic Array performs most of workload associated with the **Conv2D** operation. The width of the array is fixed at 32 pixels, while the width (determined by parameter **C_IMAGE_OP_PIXELS**) can be selected to fit a specific neural network architecture. For example, for the GoogLeNet v1 architecture, a DSP array width of 14 or 28 pixels can be selected to efficiently process images that are a factor or multiple of the DSP width.
 
+This API call retrieves the image data from the XDNN image memory and performs a max or average pooling on the image volume. The result is written back to XDNN image memory at the specified output image memory address. The associated registers are programmed into the script memory so a Script Memory Push command is required as the last CSR write.
+For the last average-pool layer before classification in the GoogLeNet v1 network, the fully-connected mode bit must be set in the command-options register field to indicate this average pool will map a 7x7 channel down to a 1x1 channel.
+
 ## Image Volume Size
 
 When programming the Image Memory (IMEM) Base Address registers, you can avoid conflicts in the memory space by calculating and checking the image volume sizes as it is stored in the XDNN IMEM. The image size in the XDNN IMEM can be used directly as the address offset from a given Base Address to find out the image volume's occupied memory address range.
