@@ -40,18 +40,18 @@ resources are required for this mode. This mode is recommended for users migrati
 design to this version from a pre-AXI version with minimal change.
 When all of the present input channels receive an active tvalid (and tready, if present, is
 asserted), an operation is validated and the output tvalid (suitably delayed by the latency
-of the core) is asserted to qualify the result. This is to allow a minimal migration from
+of the core) is asserted to qualify the result. This is to allow minimal migration from
 previous versions. If one channel receives tvalid and the other does not, an operation
 does not occur, even if tready is present and asserted. Unlike Blocking mode (which is fully
 AXI4-Stream compliant) valid transactions on an individual channel can be ignored in
 NonBlocking mode. For performance, ARESETn is registered internally, which delays its
-action by one clock cycle. The effect is that the core is still reset and does not accept input
+action by a single clock cycle meaning the core is still reset but does not accept input
 in the cycle following the deassertion of ARESETn. tvalid is also inactive on the output
 channel for this cycle.
 
 ## Blocking Mode
 
-The term ‘Blocking’ means that each channel with tready buffers data for use. The full flow
+The term ‘Blocking,’ in this context means that each channel with tready buffers data for use. The full flow
 control of AXI4-Stream aids system design because the flow of data is self-regulating.
 Blocking or NonBlocking behavior is selected using the flow_control parameter or GUI field.
 Data loss is prevented by the presence of back pressure (tready), so that data is only
@@ -186,7 +186,7 @@ The following table shows an example API detailing the relevant registers read d
 
 ## APIs
 
-This section describes the five fundamental API function calls to be defined. Each function lists the corresponding XDNN CSRs that will be programmed by the function's arguments (args). Although not shown explicitly, it is expected that each arg passed into each API function will map directly to each of the listed registers' bit fields. 
+This section describes the five fundamental API function calls to be defined. Each function lists the corresponding XDNN CSRs that will be programmed by the function's arguments (args). Although not shown explicitly, it is expected that each arg passed into each API function will map directly to each of the listed registers' bit fields.
 
 Refer to Register Space for further details of how to program each register.
 
@@ -195,7 +195,7 @@ Refer to Register Space for further details of how to program each register.
      xfDNN_Pool
 This API call retrieves the image data from the XDNN image memory and performs a max or average pooling on the image volume. The result is written back to XDNN image memory at the specified output image memory address. The associated registers are programmed into the script memory so a Script Memory Push command is required as the last CSR write.
 For the last average-pool layer before classification in the GoogLeNet v1 network, the fully-connected mode bit must be set in the command-options register field to indicate this average pool will map a 7x7 channel down to a 1x1 channel.
-     
+
     xfDNN_Conv2D
 This API call retrieves the filter data from DDR at the specified Base+Offset Address, retrieves the image data from the XDNN image memory, and performs the convolution. The result is written back to XDNN image memory at the specified output image memory address. The associated registers are programmed into the script memory so a `Script Memory Push` command is required as the last CSR write
 
@@ -205,31 +205,6 @@ This API call is the upload operation that retrieves the image from the XDNN ima
     xfDNN_Download
 
 This API call is the download operation that retrieves the image data from DDR and stores it into the XDNN image memory. The associated registers are programmed into the script memory so a `Script Memory Push` command is required as the last CSR write.
-  
+
     xfDNN_InitOnce
 This API call initializes the set of XDNN CSRs that require one-time programming. These registers are not programmed into the script memory, so they do not require a `Script Memory Push` command at the end. The associated registers are composed of DDR Base Addresses for Image and Filter data and AXI interface performance setting.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
