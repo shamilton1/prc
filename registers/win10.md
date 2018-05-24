@@ -20,7 +20,6 @@ This is the stuff under
    Indented text within a list - just add spaces
 3. three
 
-This is the stuff under
 
 </details>
 
@@ -29,3 +28,5 @@ This is the stuff under
 * Step 3
 
 Back to plain text - add a table next.
+
+**:pushpin: NOTE** Make sure the table used Aman's template 
