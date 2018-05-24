@@ -10,5 +10,13 @@ The intent of this project is to give you an understanding of blah blah
 *Note* Care must  be taken to....
 
 <details>
-<summary><b>This is the stuff hidden under the collapse icon.</b></summary>
+<summary><b>Click here for details</b></summary>
+This is the stuff under
+This is the stuff under
+This is the stuff under
+This is the stuff under
+This is the stuff under
+This is the stuff under
+This is the stuff under
+This is the stuff under
 </details>
