@@ -46,7 +46,7 @@ does not occur, even if tready is present and asserted. Unlike Blocking mode (wh
 AXI4-Stream compliant) valid transactions on an individual channel can be ignored in
 NonBlocking mode. For performance, ARESETn is registered internally, which delays its
 action by a single clock cycle meaning the core is still reset but does not accept input
-in the cycle following the deassertion of ARESETn. tvalid is also inactive on the output
+in the cycle following the de-assertion of ARESETn. tvalid is also inactive on the output
 channel for this cycle.
 
 ## Blocking Mode
