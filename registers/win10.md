@@ -16,7 +16,8 @@ This is the stuff under
 
 1. First item
 2. Second item
-   Indented text within a list - just add spaces 
+
+   Indented text within a list - just add spaces
 3. three
 
 This is the stuff under
