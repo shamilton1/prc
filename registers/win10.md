@@ -14,17 +14,15 @@ The intent of this project is to give you an understanding of blah blah
 
 This is the stuff under
 
-This is the stuff under
+   This is the stuff under
 
-This is the stuff under
+   This is the stuff under
 
-This is the stuff under
+   This is the stuff under
 
-This is the stuff under
+   This is the stuff under
 
-This is the stuff under
-
-This is the stuff under
+   This is the stuff under
 
 This is the stuff under
 
