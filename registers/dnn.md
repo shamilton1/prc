@@ -4,6 +4,9 @@
 
 While any valid range of IMEM addresses can be provided to the XDNN Kernel when issuing Download, Upload, Conv2D, or Pool operations, it is recommended to adhere to the region map (as shown below) for maximum performance. By always using the associated reserved address ranges for the Download and Upload commands, the XDNN Kernel takes advantage of parallelization in downloading the next image into the reserved download region even while the current image is being processed in the Image Processing Region. Similarly, the Image upload of a processed image can occur in parallel with the processing of the next image. This scheme requires the XDNN Kernel to be given a hint of when the reserved Image Download region can be freed up for the next image download (as this can vary for different network architectures). This hint bit is provided in the CNN Command Register bit 11 “Free Reserved Download Region”, which is programmed during script memory initialization.
 
+This API call retrieves the image data from the XDNN image memory and performs a max or average pooling on the image volume. The result is written back to XDNN image memory at the specified output image memory address. The associated registers are programmed into the script memory so a Script Memory Push command is required as the last CSR write.
+For the last average-pool layer before classification in the GoogLeNet v1 network, the fully-connected mode bit must be set in the command-options register field to indicate this average pool will map a 7x7 channel down to a 1x1 channel.
+
 ## Image Memory
 
 The input image volume must be downloaded into the XDNN internal Image Memory before performing the Conv2D or MaxPool/AveragePool operations. The Conv2D and MaxPool/AveragePool processors always read the image volume from Image Memory and write the resulting image volume back into Image Memory.
